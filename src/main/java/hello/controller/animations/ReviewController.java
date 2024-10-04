@@ -44,15 +44,19 @@ public class ReviewController {
             String levelImageName = loginUser.getLevel().getImageName();
             ProfileImage profileImage = loginUser.getProfileImage();
             String profileImageName = null;
+
             if (profileImage != null) {
                 profileImageName = profileImage.getStoreImageName();
             }
             session.setAttribute("levelImageName", levelImageName);
             session.setAttribute("profileImageName", profileImageName);
+
             return ResponseEntity.status(HttpStatus.FOUND).header("Location", "/animations/" + AnimationId).build();
+
         } catch (ReviewLimitExceedException e) {
             String errorMessage = e.getMessage();
             String encodedErrorMessage = UriUtils.encode(errorMessage, StandardCharsets.UTF_8);
+
             return ResponseEntity.status(HttpStatus.FOUND)
                     .header("Location", "/animations/" + AnimationId + "?error=" + encodedErrorMessage)
                     .build();
@@ -61,7 +65,7 @@ public class ReviewController {
 
     /* @ 리뷰 수정
     *  @ id = reviewId */
-    @PatchMapping("/reviews/patch/{id}")
+    @PatchMapping("/reviews/{id}")
     public ResponseEntity<String> updateReview(@PathVariable long id, @RequestBody Review review) {
 
         try {
@@ -83,7 +87,7 @@ public class ReviewController {
 
     /* @ 리뷰 삭제
     *  @ id = reviewId */
-    @DeleteMapping("/deleteReview/{id}")
+    @DeleteMapping("/reviews/{id}")
     public ResponseEntity<Void> deleteReview(@PathVariable long id) {
         reviewService.deleteReview(id);
         return ResponseEntity.noContent().build();

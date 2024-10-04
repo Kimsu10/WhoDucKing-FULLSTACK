@@ -149,7 +149,7 @@ document.addEventListener("DOMContentLoaded", function () {
             dangerMode: true,
         }).then((willDelete) => {
             if (willDelete) {
-                fetch(`/deleteReview/${reviewId}`, {
+                fetch(`/reviews/${reviewId}`, {
                     method: "DELETE"
                 })
                     .then(res => {
@@ -454,7 +454,7 @@ document.addEventListener("DOMContentLoaded", function() {
             saveButton.addEventListener("click", function() {
                 let updatedContent = currentText.value;
 
-                fetch(`/reviews/patch/${reviewId}`, {
+                fetch(`/reviews/${reviewId}`, {
                     method: 'PATCH',
                     headers: {
                         'Content-Type': 'application/json'

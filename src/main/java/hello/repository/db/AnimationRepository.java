@@ -32,6 +32,10 @@ public interface AnimationRepository extends JpaRepository<Animation, Long> {
             "GROUP BY a.id, a.name")
     List<GetAniListDTO> findAnimationDetailsById(long animationId);
 
+    // 특정 애니메이션을 가져오면서 리뷰도 함께 가져오기 (FETCH JOIN)
+    @Query("SELECT a FROM Animation a LEFT JOIN FETCH a.reviews r WHERE a.id = :animationId")
+    Animation findAnimationWithReviewsById(@Param("animationId") Long animationId);
+
     @Query("SELECT new hello.dto.playground.WorldCupDTO(a.id, a.name, a.imageName) " +
             "FROM Animation a " +
             "ORDER BY a.id DESC")
